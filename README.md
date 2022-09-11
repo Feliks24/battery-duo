@@ -2,12 +2,19 @@
 Simple module showing battery percentage on system with one or two batteries(such as Thinkpad with Power Bridge) based on acpi. Features 4 options to display current battery capacity.
 
 Display with Unicode Emojis
+
 ![](pics/battery-duo.png)![](pics/battery-duo-charge.png)
+
 Display with Font Awesome/Nerd-Fonts
+
 ![](pics/battery-duo-a.png) ![](pics/battery-duo-a-charge.png)
+
 Simple Display
+
 ![](pics/battery-duo-s.png)
+
 Display only percentage
+
 ![](pics/battery-duo-0.png)
 
 ## Features
