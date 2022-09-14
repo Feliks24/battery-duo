@@ -1,27 +1,24 @@
 #!/bin/bash
 
-#get current capacity of first (and second battery)
-fst=$(acpi |sed "s/,//g;s/Not charging/Notcharging/g;s/%//g"| sed -n -e 1p | cut -d " " -f4 | sed "s/ //g")
-sec=$(acpi |sed "s/,//g;s/Not charging/Notcharging/g;s/%//g"| sed -n -e 2p | cut -d " " -f4 | sed "s/ //g")
+dir="/sys/class/power_supply"
+ch="Charging"
+#get first stats
+cap0=$(cat "$dir"/BAT0/energy_now)
+max0=$( cat "$dir"/BAT0/energy_full)
+status0=$(cat "$dir"/BAT0/status)
 
-#get last max capacity of first (and second battery)
-fst_max=$(acpi -i | sed -n -e 2p | cut -d " " -f10)
-sec_max=$(acpi -i | sed -n -e 4p | cut -d " " -f10)
-capacity_max=$(($fst_max+$sec_max))
-
-#calculate percentage based amount of batteries
-if [ -z "$sec" ]; then
-	capacity=$fst
+#check for second battery
+if [ -d "$dir"/BAT1 ]; then
+	cap1=$(cat "$dir"/BAT1/energy_now)
+	max1=$( cat "$dir"/BAT1/energy_full)
+	status1=$(cat "$dir"/BAT1/status)
+	capacity=$((100*($cap0+$cap1)/($max0+$max1)))
 else
-	capacity=$((($fst*$fst_max+$sec*$sec_max)/$capacity_max))
+	capacity=$((100*$cap0/$max0))
 fi
 
-fst_status=$(acpi | cut -d " " -f3 | sed -n -e 1p | sed "s/,//g;s/ //g")
-sec_status=$(acpi | cut -d " " -f3 | sed -n -e 2p | sed "s/,//g;s/ //g")
-ch="Charging"
-
 #get symbol for -a option and simple
-if [ "$fst_status" = "$ch" ] || [ "$sec_status" = "$ch" ] ; then
+if [ "$status0" = "$ch" ] || [ "$status1" = "$ch" ] ; then
 	symbol="🔌"
 	symbola=""
 elif [ "$capacity" -ge 90 ] ; then
