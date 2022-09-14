@@ -32,3 +32,18 @@ Download at least the battery-duo script file and place in a Direcotry you desir
 command=/path/to/file/battery-duo
 interval=5
 ```
+the example given will display the precentage and an unicode emoji based on if the the battery is charging or not.
+
+Alternativly you can choose to display the battery percentage with a font awesome symbol. Here it will also change the symbol based not just on whether or not the battery is charging but also based on how empty or how full the battery is:
+```
+[battery-duo]
+command=/path/to/file/battery-duo -a
+interval=5
+```
+
+To display just BAT infront of the percentage use argument *-s* (for simple).
+To display just the percentage use option *-0*.
+
+
+Please do modify to your liking and or contribute.
+
